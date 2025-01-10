@@ -1,0 +1,272 @@
+{%- comment -%}
+    Put This Link in header of theme liquid file.
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{%- endcomment -%}
+{% assign section_unique_class = section.id %}
+{% assign section_last_text = section.id | split: '_' | last | downcase %}
+{% style %}
+    #shopify-section-{{ section.id }} .swiper-slide {
+        background-color: #FFFFFF;
+        box-shadow: 0px 4px 64px rgba(0, 0, 0, 0.06);
+        border-radius: 15px;
+        padding: 20px;
+        transition: background-color 0.4s ease 0s, color 0.4s ease 0s;
+    }
+    #shopify-section-{{ section.id }} .swiper-slide.swiper-slide-active {
+        background-color: #2B5A66;
+        color: #fff;
+    }
+    #shopify-section-{{ section.id }} .top-area {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    @media screen and (max-width: 749px) {
+        #shopify-section-{{ section.id }} .top-area .arrows {
+            display: none;
+        }
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-prev {
+        position: relative;
+        inset: 0;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        background-color: #FAF5FF;
+        margin: 0;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-prev::before, #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-prev::after {
+        font-size: 15px;
+        color: #000;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-prev:hover {
+        background-color: #1D5765;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-prev:hover::before, #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-prev:hover::after {
+        font-size: 15px;
+        color: #fff;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-next {
+        position: relative;
+        inset: 0;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        background-color: #FAF5FF;
+        margin: 0;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-next::before, #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-next::after {
+        font-size: 15px;
+        color: #000;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-next:hover {
+        background-color: #1D5765;
+    }
+    #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-next:hover::before, #shopify-section-{{ section.id }} .top-area .arrows .swiper-button-next:hover::after {
+        font-size: 15px;
+        color: #fff;
+    }
+    #shopify-section-{{ section.id }} .section-content {
+        padding: 35px 0;
+    }
+    #shopify-section-{{ section.id }} .middel-area-s .review-description {
+        margin: 10px 0;
+    }
+    #shopify-section-{{ section.id }} .bottom-area-s {
+        display: flex;
+        gap: 10px;
+    }
+    #shopify-section-{{ section.id }} .bottom-area-s .profile-image-wrapper img {
+        width: 49px;
+        height: 49px;
+        border-radius: 50%;
+    }
+{% endstyle %}
+<div class="inner-container">
+    <div class="top-area">
+        <h2>
+            See What Our Clients Say
+        </h2>
+        <div class="arrows">
+            <div class="swiper-button-prev swiper-button-prev-{{ section_unique_class }}"></div>
+            <div class="swiper-button-next swiper-button-next-{{ section_unique_class }}"></div>
+        </div>
+    </div>
+    <smart-slider-{{ section_last_text }} class="swiper swiper-container">
+        <div class="section-content swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                        <div class="top-area-s">
+                            <div class="stars">
+                                {{ section.settings.star_icon | img_url: '122x' | img_tag: section.settings.star_icon.alt , 'stars-images' }}
+                            </div>
+                        </div>
+                        <div class="middel-area-s">
+                            <h3 class="review-title">
+                                {{ block.settings.review_title }}
+                            </h3>
+                            <div class="rte review-description">
+                                {{ block.settings.review_content }}
+                            </div>
+                        </div>
+                        <div class="bottom-area-s">
+                            <div class="profile-image-wrapper">
+                                {{ block.settings.profile | img_url: '100' | img_tag: block.settings.profile.alt , 'profile-image-customer' }}
+                            </div>
+                            <div class="customer-details">
+                                <h4 class="customer-name">
+                                    {{ block.settings.name }}
+                                </h4>
+                                <p class="customer-title">
+                                    {{ block.settings.title }}
+                                </p>
+                            </div>
+                        </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination swiper-pagination-{{ section_unique_class }}"></div>
+        <div class="swiper-scrollbar swiper-scrollbar-{{ section_unique_class }}"></div>
+        <script type="application/json" class="swiper-config">
+            {
+                "loop": true,
+                "slidesPerView": 1.2,
+                "spaceBetween": 10,
+                "centeredSlides": true,
+                "navigation": {
+                    "enabled" : false,
+                    "nextEl": ".swiper-button-next-{{ section_unique_class }}",
+                    "prevEl": ".swiper-button-prev-{{ section_unique_class }}"
+                },
+                "pagination": {
+                    "enabled" : false,
+                    "clickable": true,
+                    "el": ".swiper-pagination-{{ section_unique_class }}"
+                },
+                "scrollbar": {
+                    "enabled" : false,
+                    "el": ".swiper-scrollbar-{{ section_unique_class }}"
+                }, 
+                "breakpoints": {
+                    "750": {
+                        "navigation": {
+                            "enabled": true
+                        },
+                        "pagination": {
+                            "enabled" : false
+                        },
+                        "scrollbar": {
+                            "enabled" : false
+                        },
+                        "slidesPerView": 2,
+                        "spaceBetween": 15
+                    },
+                    "1200": {
+                        "navigation": {
+                            "enabled": true
+                        },
+                        "pagination": {
+                            "enabled" : false
+                        },
+                        "scrollbar": {
+                            "enabled" : false
+                        }, 
+                        "slidesPerView": 4,
+                        "spaceBetween": 20
+                    }
+                }
+            }
+        </script>
+    </smart-slider-{{ section_last_text }}>
+</div>
+
+<script defer>
+    // Copy This Scrip in main js of theme
+    if(!customElements.get('smart-slider-{{ section_last_text }}')){
+        class SmartSlider_{{ section_last_text }} extends HTMLElement {
+            constructor() {
+                super();
+                this.config = JSON.parse(this.querySelector('.swiper-config').textContent);
+                this.swiper = new Swiper(this, this.config);
+            }
+        }
+        customElements.define('smart-slider-{{ section_last_text }}', SmartSlider_{{ section_last_text }});
+    }
+</script>
+
+{% schema %}
+{
+    "name": "Reviews Slider",
+    "class": "review-slider-cp",
+    "blocks": [
+        {
+            "type": "Slide",
+            "name": "Slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "profile",
+                    "label": "Profile"
+                },
+                {
+                    "type": "text",
+                    "id": "review_title",
+                    "label": "Review Heading",
+                    "default": "WAVE"
+                },
+                {
+                    "type": "richtext",
+                    "id": "review_content",
+                    "label": "Review Content",
+                    "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "name",
+                    "label": "Name",
+                    "default": "Emma Watson"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Customer"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name":"Reviews Slider"
+        }
+    ],
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "star_icon",
+            "label": "Star Icons"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "See What Our Clients Say"
+        }
+    ]
+}
+{% endschema %}
